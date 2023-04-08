@@ -11,11 +11,15 @@ const storeData = {
 
 wss.on('connection', function connection(ws) {
   ws.on('message', function message(data) {
-    console.log('received: %s', data);
     handlerEventMessage(data.toString(), ws);
   });
+
   // Enviar la informacion previamente guardada
-  ws.send(`client-web~set-data~${storeData.luz}|${storeData.humedad}|${storeData.tempAire}|${storeData.humedadAire}`);
+  const response =`client-web~set-data~${storeData.luz}|${storeData.humedad}|${storeData.tempAire}|${storeData.humedadAire}`;
+
+  console.log('NEW_CLIENT_RESPONSE: ', response);
+  
+  ws.send(response);
 });
 
 function handlerEventMessage(payload, ws) {
